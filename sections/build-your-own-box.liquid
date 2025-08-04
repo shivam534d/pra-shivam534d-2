@@ -1,24 +1,386 @@
-{{ 'build-your-own-box.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  for block in section.blocks
+    if block.type == 'step_2'
+      assign step_2_block = block
+    elsif block.type == 'step_3'
+      assign step_3_block = block
+    elsif block.type == 'step_4'
+      assign step_4_block = block
+    endif
+  endfor
+-%}
 
-<div class="build-your-own-box" data-section="{{ section.id }}">
+<style>
+  #shopify-section-{{- section.id }} {
+    --white-color: {{ section.settings.white_color }};
+    --black-color: {{ section.settings.black_color }};
+    --gray-color: {{ section.settings.gray_color }};
+    --gray-color-2: {{ section.settings.gray_color_2 }};
+    --primary-color: {{ section.settings.primary_color }};
+    --text-on-primary-color: {{ section.settings.text_on_primary_color }};
+  }
+</style>
+{{ 'build-your-own-box.css' | asset_url | stylesheet_tag: preload: true }}
 
+<div class="build-your-own-box page-width" data-section="{{ section.id }}">
+  <div class="step-1-container">
+    <div class="step-1-content">
+      <h1>{{ section.settings.title }}</h1>
+      <div class="size_choice_container">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'size_choice' %}
+              <div class="size_choice_item">
+                {{ block.settings.image | image_url: width: 500 | image_tag: class: 'size_choice_image' }}
+                <h2 class="size_choice_item_title">{{ block.settings.title }}</h2>
+                <div class="flex">
+                  <p class="size_choice_item_size">{{ block.settings.size }}</p> •
+                  <p class="size_choice_item_subtitle">{{ block.settings.subtitle }}</p>
+                </div>
+              </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+
+{% comment %}
+  <div class="step-2-container">
+    <div class="navigation-row">
+      <button class="btn">
+        {{ 'arrow-left.svg' | inline_asset_content }}
+        {{ section.settings.back_text }}
+      </button>
+      <div class="flex">
+        <h2>{{ step_2_block.settings.tab_title }}</h2>
+        <h2>{{ step_3_block.settings.tab_title }}</h2>
+        <h2>{{ step_4_block.settings.tab_title }}</h2>
+      </div>
+      <button class="btn">
+        {{ 'arrow-right.svg' | inline_asset_content }}
+        {{ section.settings.next_text }}
+      </button>
+    </div>
+  </div>
+{% endcomment %}
 </div>
 
 <script>
-  console.log("Build Your Own Box");
+  let data = {{ section.settings.collection.products | json }};
 </script>
 
 <script src="{{ 'build-your-own-box.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
-  "name": "Build Your Own Box",
+  "name": "t:sections.build_your_own_box.name",
   "tag": "section",
   "class": "section byob-section",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "back_text",
+      "label": "t:sections.build_your_own_box.settings.back_text.label",
+      "default": "Back"
+    },
+    {
+      "type": "text",
+      "id": "next_text",
+      "label": "t:sections.build_your_own_box.settings.next_text.label",
+      "default": "Next"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.build_your_own_box.settings.title.label",
+      "default": "Who is this for?"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:sections.build_your_own_box.settings.paragraph.content"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.build_your_own_box.settings.colors_header.content"
+    },
+    {
+      "type": "color",
+      "id": "white_color",
+      "label": "t:sections.build_your_own_box.settings.white_color.label",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "black_color",
+      "label": "t:sections.build_your_own_box.settings.black_color.label",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "gray_color",
+      "label": "t:sections.build_your_own_box.settings.gray_color.label",
+      "default": "#6c757d"
+    },
+    {
+      "type": "color",
+      "id": "gray_color_2",
+      "label": "t:sections.build_your_own_box.settings.gray_color_2.label",
+      "default": "#e9ecef"
+    },
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "t:sections.build_your_own_box.settings.primary_color.label",
+      "default": "#dc3545"
+    },
+    {
+      "type": "color",
+      "id": "text_on_primary_color",
+      "label": "t:sections.build_your_own_box.settings.text_on_primary_color.label",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "size_choice",
+      "name": "t:sections.build_your_own_box.blocks.size_choice.name",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.build_your_own_box.blocks.size_choice.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.build_your_own_box.blocks.size_choice.settings.title.label",
+          "default": "For Myself"
+        },
+        {
+          "type": "text",
+          "id": "size",
+          "label": "t:sections.build_your_own_box.blocks.size_choice.settings.size.label",
+          "default": "1lb"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "t:sections.build_your_own_box.blocks.size_choice.settings.subtitle.label",
+          "default": "Delivered right to your door!"
+        }
+      ]
+    },
+    {
+      "type": "step_2",
+      "name": "t:sections.build_your_own_box.blocks.step_2.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "t:sections.build_your_own_box.blocks.step_2.settings.tab_title.label",
+          "default": "Quantity & Roast Preference"
+        },
+        {
+          "type": "text",
+          "id": "choice_1_title",
+          "label": "t:sections.build_your_own_box.blocks.step_2.settings.choice_1_title.label",
+          "default": "Bag Size",
+          "info": "t:sections.build_your_own_box.blocks.step_2.settings.choice_1_title.info",
+        },
+        {
+          "type": "text",
+          "id": "choice_2_title",
+          "label": "t:sections.build_your_own_box.blocks.step_2.settings.choice_2_title.label",
+          "default": "Grind Type",
+          "info": "t:sections.build_your_own_box.blocks.step_2.settings.choice_2_title.info",
+        },
+        {
+          "type": "text",
+          "id": "choice_3_title",
+          "label": "t:sections.build_your_own_box.blocks.step_2.settings.choice_3_title.label",
+          "default": "Frequency",
+          "info": "t:sections.build_your_own_box.blocks.step_2.settings.choice_3_title.info",
+        },
+        {
+          "type": "text",
+          "id": "meta_info",
+          "label": "t:sections.build_your_own_box.blocks.step_2.settings.meta_info.label",
+          "default": "Choose your preferences"
+        }
+      ]
+    },
+    {
+      "type": "bag_size",
+      "name": "t:sections.build_your_own_box.blocks.bag_size.name",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.build_your_own_box.blocks.bag_size.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.build_your_own_box.blocks.bag_size.settings.title.label",
+          "default": "4 Bags"
+        },
+        {
+          "type": "number",
+          "id": "number_of_bags",
+          "label": "t:sections.build_your_own_box.blocks.bag_size.settings.number_of_bags.label",
+          "default": 4
+        }
+      ]
+    },
+    {
+      "type": "grind_type",
+      "name": "t:sections.build_your_own_box.blocks.grind_type.name",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.build_your_own_box.blocks.grind_type.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.build_your_own_box.blocks.grind_type.settings.title.label",
+          "default": "Lavazza Coffee"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "t:sections.build_your_own_box.blocks.grind_type.settings.subtitle.label",
+          "default": "EXOTIC • RICH • AROMATIC"
+        },
+        {
+          "type": "text",
+          "id": "type_of_product",
+          "label": "t:sections.build_your_own_box.blocks.grind_type.settings.type_of_product.label",
+          "info": "t:sections.build_your_own_box.blocks.grind_type.settings.type_of_product.info",
+          "default": "coffee"
+        }
+      ]
+    },
+    {
+      "type": "frequency_block",
+      "name": "t:sections.build_your_own_box.blocks.frequency_block.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "display_text",
+          "label": "t:sections.build_your_own_box.blocks.frequency_block.settings.display_text.label",
+          "default": "Monthly"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "t:sections.build_your_own_box.blocks.frequency_block.settings.value.label",
+          "info": "t:sections.build_your_own_box.blocks.frequency_block.settings.value.info",
+          "default": "monthly"
+        }
+      ]
+    },
+    {
+      "type": "step_3",
+      "name": "t:sections.build_your_own_box.blocks.step_3.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "t:sections.build_your_own_box.blocks.step_3.settings.tab_title.label",
+          "default": "Product Selection"
+        },
+        {
+          "type": "text",
+          "id": "text_1",
+          "label": "t:sections.build_your_own_box.blocks.step_3.settings.text_1.label",
+          "default": "You have selected"
+        },
+        {
+          "type": "text",
+          "id": "text_2",
+          "label": "t:sections.build_your_own_box.blocks.step_3.settings.text_2.label",
+          "default": "Based on Your Selection"
+        }
+      ]
+    },
+    {
+      "type": "step_4",
+      "name": "t:sections.build_your_own_box.blocks.step_4.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "t:sections.build_your_own_box.blocks.step_4.settings.tab_title.label",
+          "default": "Summary"
+        },
+        {
+          "type": "text",
+          "id": "text_1",
+          "label": "t:sections.build_your_own_box.blocks.step_4.settings.text_1.label",
+          "default": "Order Summary"
+        },
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "Build Your Own Box",
+      "name": "t:sections.build_your_own_box.name",
+      "blocks": [
+        {
+          "type": "step_2"
+        },
+        {
+          "type": "bag_size",
+          "settings": {
+            "title": "4 Bags",
+            "number_of_bags": 4
+          }
+        },
+        {
+          "type": "bag_size",
+          "settings": {
+            "title": "8 Bags",
+            "number_of_bags": 8
+          }
+        },
+        {
+          "type": "bag_size",
+          "settings": {
+            "title": "12 Bags",
+            "number_of_bags": 12
+          }
+        },
+        {
+          "type": "grind_type",
+          "settings": {
+            "title": "Lavazza Coffee",
+            "subtitle": "EXOTIC • RICH • AROMATIC",
+            "type_of_product": "coffee"
+          }
+        },
+        {
+          "type": "frequency_block",
+          "settings": {
+            "display_text": "Monthly",
+            "value": "monthly"
+          }
+        },
+        {
+          "type": "step_3"
+        },
+        {
+          "type": "step_4"
+        }
+      ]
     }
   ]
 }
