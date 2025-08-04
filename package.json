@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "tailwindcss": "^4.1.11"
+  },
+  "name": "pra-shivam534d-2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "tw": "npx tailwindcss -i ./assets/tailwind-styles.css -o ./assets/tailwind.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shivam534d/pra-shivam534d-2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shivam534d/pra-shivam534d-2/issues"
+  },
+  "homepage": "https://github.com/shivam534d/pra-shivam534d-2#readme",
+  "description": ""
+}
