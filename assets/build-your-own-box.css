@@ -10,6 +10,14 @@
   position: relative;
   width: 100%;
   height: 100vh;
+  overflow-y: auto;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.build-your-own-box::-webkit-scrollbar {
+  display: none;
 }
 
 .step-1-content {
@@ -186,7 +194,9 @@
   └─────────────────────────────────────────────────────────────────────────┘
 */
 
-.step-2-content {}
+.step-2-content {
+  margin-bottom: 1.5rem;
+}
 
 .step-2-content .section {
   display: flex;
@@ -220,6 +230,7 @@
   margin: 0 auto;
 }
 
+.step-2-content .grind_types_card,
 .step-2-content .bag_sizes_card {
   display: flex;
   flex-direction: column;
@@ -227,14 +238,17 @@
   justify-content: flex-start;
   padding: 2.5rem;
   background-color: var(--white-color);
+  border: 2px solid transparent;
 }
 
+.step-2-content .grind_types_card .grind_type_image,
 .step-2-content .bag_sizes_card .bag_size_image {
   width: auto;
   height: 10.9rem;
   margin: 4.89rem auto;
 }
 
+.step-2-content .grind_types_card .grind_type_title,
 .step-2-content .bag_sizes_card .bag_size_title {
   text-align: left;
   font-family: "Montserrat";
@@ -247,6 +261,7 @@
   opacity: 1;
 }
 
+.step-2-content .grind_types_card .grind_type_subtitle,
 .step-2-content .bag_sizes_card .bag_size_subtitle {
   text-align: left;
   font-family: "Roboto";
@@ -264,4 +279,71 @@
   └─────────────────────────────────────────────────────────────────────────┘
 */
 
-.step-2-content .grind_types_card_container {}
+.step-2-content .grind_types_card_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.step-2-content .grind_types_card {
+  min-width: 20rem;
+}
+
+.step-2-content .grind_types_card .grind_type_image {
+  display: block;
+  aspect-ratio: 1/1;
+}
+
+/*
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ Frequency Container                                                     │
+  └─────────────────────────────────────────────────────────────────────────┘
+*/
+
+.step-2-content .frequency_container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.step-2-content .frequency_card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4.5rem 0rem;
+  background-color: var(--white-color);
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.step-2-content .frequency_card .frequency_title {
+  text-align: center;
+  font-family: "Montserrat";
+  font-weight: bold;
+  font-size: 2.4rem;
+  line-height: 2.9rem;
+  letter-spacing: 0;
+  color: var(--gray-color);
+  text-transform: capitalize;
+}
+
+
+.step-2-content .grind_types_card:hover,
+.step-2-content .bag_sizes_card:hover,
+.step-2-content .frequency_card:hover,
+.step-2-content .frequency_card.active,
+.step-2-content .grind_types_card.active,
+.step-2-content .bag_sizes_card.active {
+  border: 2px solid var(--primary-color);
+}
+
+.step-2-content .meta_info {
+  text-align: center;
+}
