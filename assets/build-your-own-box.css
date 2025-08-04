@@ -13,11 +13,17 @@
 }
 
 .step-1-content {
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: 100%;
+  gap: 4.5rem;
+}
+
+.step-1-content.active {
+  display: flex;
 }
 
 .step-1-content h1 {
@@ -35,7 +41,6 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
   gap: 5rem;
 }
 
@@ -46,6 +51,20 @@
   font-family: "Montserrat";
   font-weight: bold;
   color: var(--black-color);
+  border: 0.2rem solid var(--white-color);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.size_choice_item.active,
+.size_choice_item:hover {
+  border: 0.2rem solid var(--primary-color);
+}
+
+.size_choice_image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 2.5rem;
 }
 
 .size_choice_item_title {
@@ -58,6 +77,12 @@
   color: #979792;
   text-transform: capitalize;
   opacity: 1;
+  margin-bottom: 0.8rem;
+}
+
+.size_choice_item_title+.flex {
+  gap: 0.8rem;
+  align-items: center;
 }
 
 .size_choice_item_size {
@@ -79,3 +104,164 @@
   letter-spacing: 0;
   color: var(--black-color);
 }
+
+/*
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ Step 2 to 4 Container                                                   │
+  └─────────────────────────────────────────────────────────────────────────┘
+*/
+
+.step-2-4-content {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-2-4-content.active {
+  display: flex;
+}
+
+/*
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ Navigation Row                                                          │
+  └─────────────────────────────────────────────────────────────────────────┘
+*/
+
+.navigation-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 6rem 0rem;
+}
+
+.navigation-row .btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  cursor: pointer;
+  font-family: "Montserrat";
+  text-align: center;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: bold;
+  letter-spacing: 0.65px;
+  color: #1A1818;
+  text-transform: uppercase;
+  opacity: 1;
+}
+
+.navigation_row_tabs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 6.6rem;
+}
+
+.navigation_row_tab {
+  text-align: center;
+  font-family: "Montserrat";
+  font-weight: bold;
+  font-size: 1.1rem;
+  line-height: 1.4rem;
+  color: var(--black-color);
+  text-transform: uppercase;
+  opacity: 0.3;
+}
+
+.navigation_row_tab.active {
+  opacity: 1;
+  color: var(--primary-color);
+}
+
+/*
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ Step 2                                                                  │
+  └─────────────────────────────────────────────────────────────────────────┘
+*/
+
+.step-2-content {}
+
+.step-2-content .section {
+  display: flex;
+  flex-direction: column;
+  gap: 4.5rem;
+  margin-bottom: 4.5rem;
+}
+
+.step-2-content .section h2 {
+  text-align: center;
+  font-family: "Montserrat";
+  font-weight: bold;
+  font-size: 2.4rem;
+  line-height: 2.9rem;
+  letter-spacing: 0;
+  color: var(--black-color);
+  opacity: 1;
+}
+
+/*
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ Bag Sizes Card Container                                                │
+  └─────────────────────────────────────────────────────────────────────────┘
+*/
+
+.step-2-content .bag_sizes_card_container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.step-2-content .bag_sizes_card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 2.5rem;
+  background-color: var(--white-color);
+}
+
+.step-2-content .bag_sizes_card .bag_size_image {
+  width: auto;
+  height: 10.9rem;
+  margin: 4.89rem auto;
+}
+
+.step-2-content .bag_sizes_card .bag_size_title {
+  text-align: left;
+  font-family: "Montserrat";
+  font-weight: bold;
+  font-size: 2.4rem;
+  line-height: 2.9rem;
+  letter-spacing: 0;
+  color: var(--gray-color);
+  text-transform: capitalize;
+  opacity: 1;
+}
+
+.step-2-content .bag_sizes_card .bag_size_subtitle {
+  text-align: left;
+  font-family: "Roboto";
+  font-weight: normal;
+  font-size: 1.5rem;
+  line-height: 2.5rem;
+  letter-spacing: 0;
+  color: var(--black-color);
+  opacity: 1;
+}
+
+/*
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ Grind Type Container                                                    │
+  └─────────────────────────────────────────────────────────────────────────┘
+*/
+
+.step-2-content .grind_types_card_container {}

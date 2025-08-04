@@ -23,51 +23,99 @@
 {{ 'build-your-own-box.css' | asset_url | stylesheet_tag: preload: true }}
 
 <div class="build-your-own-box page-width" data-section="{{ section.id }}">
-  <div class="step-1-container">
-    <div class="step-1-content">
-      <h1>{{ section.settings.title }}</h1>
-      <div class="size_choice_container">
-        {% for block in section.blocks %}
-          {% case block.type %}
-            {% when 'size_choice' %}
-              <div class="size_choice_item">
-                {{ block.settings.image | image_url: width: 500 | image_tag: class: 'size_choice_image' }}
-                <h2 class="size_choice_item_title">{{ block.settings.title }}</h2>
-                <div class="flex">
-                  <p class="size_choice_item_size">{{ block.settings.size }}</p> •
-                  <p class="size_choice_item_subtitle">{{ block.settings.subtitle }}</p>
-                </div>
+  <div class="step-1-content">
+    <h1>{{ section.settings.title }}</h1>
+    <div class="size_choice_container">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'size_choice' %}
+            <div class="size_choice_item" data-size-choice="{{ block.settings.size }}">
+              {{ block.settings.image | image_url: width: 500 | image_tag: class: 'size_choice_image' }}
+              <h2 class="size_choice_item_title">{{ block.settings.title }}</h2>
+              <div class="flex">
+                <p class="size_choice_item_size">{{ block.settings.size }}</p> •
+                <p class="size_choice_item_subtitle">{{ block.settings.subtitle }}</p>
               </div>
-          {% endcase %}
-        {% endfor %}
-      </div>
-
+            </div>
+        {% endcase %}
+      {% endfor %}
     </div>
+
   </div>
 
-{% comment %}
-  <div class="step-2-container">
+  <div class="step-2-4-content active">
     <div class="navigation-row">
       <button class="btn">
         {{ 'arrow-left.svg' | inline_asset_content }}
         {{ section.settings.back_text }}
       </button>
-      <div class="flex">
-        <h2>{{ step_2_block.settings.tab_title }}</h2>
-        <h2>{{ step_3_block.settings.tab_title }}</h2>
-        <h2>{{ step_4_block.settings.tab_title }}</h2>
+      <div class="navigation_row_tabs">
+        <h2 class="navigation_row_tab active" data-tab="step_2">{{ step_2_block.settings.tab_title }}</h2>
+        <h2 class="navigation_row_tab" data-tab="step_3">{{ step_3_block.settings.tab_title }}</h2>
+        <h2 class="navigation_row_tab" data-tab="step_4">{{ step_4_block.settings.tab_title }}</h2>
       </div>
       <button class="btn">
-        {{ 'arrow-right.svg' | inline_asset_content }}
         {{ section.settings.next_text }}
+        {{ 'arrow-right.svg' | inline_asset_content }}
       </button>
     </div>
+
+    <div class="step-2-content">
+      <div class="section">
+        <h2>{{ step_2_block.settings.choice_1_title }}</h2>
+        <div class="bag_sizes_card_container">
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'bag_size' %}
+                <div class="bag_sizes_card">
+                  {{ block.settings.image | image_url: width: 500 | image_tag: class: 'bag_size_image' }}
+                  <h3 class="bag_size_title">{{ block.settings.title }}</h3>
+                  <p class="bag_size_subtitle">{{ block.settings.number_of_bags }} bags</p>
+                </div>
+            {% endcase %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>{{ step_2_block.settings.choice_2_title }}</h2>
+        <div class="grind_types_card_container">
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'grind_type' %}
+                <div class="grind_type">
+                  {{ block.settings.image | image_url: width: 500 | image_tag: class: 'grind_type_image' }}
+                  <h3 class="grind_type_title">{{ block.settings.title }}</h3>
+                  <p class="grind_type_subtitle">{{ block.settings.subtitle }}</p>
+                </div>
+            {% endcase %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>{{ step_2_block.settings.choice_3_title }}</h2>
+        <div class="choices">
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'frequency_block' %}
+                <div class="frequency">
+                  <h3 class="frequency_title">{{ block.settings.display_text }}</h3>
+                </div>
+            {% endcase %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <p>{{ step_2_block.settings.meta_info }}</p>
+    </div>
+
   </div>
-{% endcomment %}
 </div>
 
 <script>
-  let data = {{ section.settings.collection.products | json }};
+  let products_data = {{ section.settings.collection.products | json }};
+  console.log(`🚀 || build-your-own-box.liquid:69 || products_data:`, products_data);
 </script>
 
 <script src="{{ 'build-your-own-box.js' | asset_url }}" defer></script>
