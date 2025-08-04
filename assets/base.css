@@ -247,6 +247,12 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   font-weight: var(--font-body-weight);
 }
 
+picture,
+img {
+  width: 100%;
+  height: auto;
+}
+
 h1,
 h2,
 h3,
@@ -3594,4 +3600,46 @@ details-disclosure > details {
   100% {
     transform: translateX(100%) scaleX(0);
   }
+}
+
+/*
+  ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Utility Classes                                                                                                 │
+  └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+*/
+
+.flex {
+  display: flex;
+}
+
+.flex.col {
+  flex-direction: column;
+}
+
+.flex.row {
+  flex-direction: row;
+}
+
+.flex.center {
+  align-items: center;
+}
+
+.flex.between {
+  justify-content: space-between;
+}
+
+.flex.around {
+  justify-content: space-around;
+}
+
+.flex.start {
+  justify-content: flex-start;
+}
+
+.flex.end {
+  justify-content: flex-end;
+}
+
+.flex.wrap {
+  flex-wrap: wrap;
 }
