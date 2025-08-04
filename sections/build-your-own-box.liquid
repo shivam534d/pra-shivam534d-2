@@ -1,0 +1,25 @@
+{{ 'build-your-own-box.css' | asset_url | stylesheet_tag }}
+
+<div class="build-your-own-box" data-section="{{ section.id }}">
+
+</div>
+
+<script>
+  console.log("Build Your Own Box");
+</script>
+
+<script src="{{ 'build-your-own-box.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Build Your Own Box",
+  "tag": "section",
+  "class": "section byob-section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Build Your Own Box",
+    }
+  ]
+}
+{% endschema %}
