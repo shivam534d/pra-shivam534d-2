@@ -364,6 +364,155 @@
     }
   },
   "sections": {
+    "build_your_own_box": {
+      "name": "Build Your Own Box",
+      "settings": {
+        "back_text": {
+          "label": "Back Text"
+        },
+        "next_text": {
+          "label": "Next Text"
+        },
+        "title": {
+          "label": "Title"
+        },
+        "paragraph": {
+          "content": "Add Blocks of Type - Size Choice"
+        },
+        "colors_header": {
+          "content": "Colors"
+        },
+        "white_color": {
+          "label": "White Color"
+        },
+        "black_color": {
+          "label": "Black Color"
+        },
+        "gray_color": {
+          "label": "Gray Color"
+        },
+        "gray_color_2": {
+          "label": "Gray Color 2"
+        },
+        "primary_color": {
+          "label": "Primary Color"
+        },
+        "text_on_primary_color": {
+          "label": "Text on Primary Color"
+        }
+      },
+      "blocks": {
+        "size_choice": {
+          "name": "Size Choice",
+          "settings": {
+            "image": {
+              "label": "Image"
+            },
+            "title": {
+              "label": "Title"
+            },
+            "size": {
+              "label": "Size"
+            },
+            "subtitle": {
+              "label": "Subtitle"
+            }
+          }
+        },
+        "step_2": {
+          "name": "Step 2",
+          "settings": {
+            "tab_title": {
+              "label": "Tab Title"
+            },
+            "choice_1_title": {
+              "label": "Choice 1 Title",
+              "info": "Add Blocks of Type - Bag Size"
+            },
+            "choice_2_title": {
+              "label": "Choice 2 Title",
+              "info": "Add Blocks of Type - Grind Type"
+            },
+            "choice_3_title": {
+              "label": "Choice 3 Title",
+              "info": "Add Blocks of Type - Frequency"
+            },
+            "meta_info": {
+              "label": "Meta Info"
+            }
+          }
+        },
+        "bag_size": {
+          "name": "Bag Size",
+          "settings": {
+            "image": {
+              "label": "Image"
+            },
+            "title": {
+              "label": "Title"
+            },
+            "number_of_bags": {
+              "label": "Number of Bags"
+            }
+          }
+        },
+        "grind_type": {
+          "name": "Grind Type",
+          "settings": {
+            "image": {
+              "label": "Image"
+            },
+            "title": {
+              "label": "Title"
+            },
+            "subtitle": {
+              "label": "Subtitle"
+            },
+            "type_of_product": {
+              "label": "Type of Product",
+              "info": "Select the product type for each option."
+            }
+          }
+        },
+        "frequency_block": {
+          "name": "Frequency",
+          "settings": {
+            "display_text": {
+              "label": "Display Text"
+            },
+            "value": {
+              "label": "Value",
+              "info": "This value will show up in orders for the frequency of subscription orders."
+            }
+          }
+        },
+        "step_3": {
+          "name": "Step 3",
+          "settings": {
+            "tab_title": {
+              "label": "Tab Title"
+            },
+            "text_1": {
+              "label": "Text 1"
+            },
+            "text_2": {
+              "label": "Text 2"
+            }
+          }
+        },
+        "step_4": {
+          "name": "Step 4",
+          "settings": {
+            "tab_title": {
+              "label": "Tab Title"
+            },
+            "text_1": {
+              "label": "Title"
+            },
+          }
+        }
+      }
+    },
     "all": {
       "animation": {
         "content": "Animations",
@@ -453,7 +602,7 @@
         },
         "paragraph": {
           "content": "Appear only on large screens"
-        },                     
+        },
         "show_social": {
           "label": "Social media icons",
           "info": "[Manage social accounts](/editor?context=theme&category=social%20media)"
@@ -517,7 +666,7 @@
         },
         "header_layout": {
           "content": "Layout"
-        },            
+        },
         "desktop_layout": {
           "label": "Layout",
           "options__1": {
@@ -610,7 +759,7 @@
         },
          "header_layout": {
         "content": "Layout"
-        },        
+        },
         "image_ratio": {
           "label": "Image ratio",
           "options__1": {
@@ -696,13 +845,13 @@
         },
         "text_header": {
         "content": "Text"
-        },        
+        },
         "blog": {
           "label": "Blog"
         },
         "post_limit": {
           "label": "Post count"
-        }, 
+        },
         "columns_desktop": {
           "label": "Columns"
         },
@@ -757,7 +906,7 @@
         },
         "header_mobile": {
         "content": "Mobile layout"
-        },                 
+        },
         "collection": {
           "label": "Collection"
         },
@@ -1324,7 +1473,7 @@
       "content": "Content"
       },
       "header_colors": {
-      "content": "Colors" 
+      "content": "Colors"
       },
         "image": {
           "label": "Image"
@@ -1504,7 +1653,7 @@
         },
         "header_3":{
         "content": "Colors"
-        },        
+        },
         "image_height": {
           "options__1": {
             "label": "Adapt to image"
@@ -2295,7 +2444,7 @@
             },
             "pairing_2": {
               "label": "Pairing 2"
-            },            
+            },
             "icon_2": {
               "label": "Icon"
             },
@@ -2308,7 +2457,7 @@
             },
             "pairing_3": {
             "label": "Pairing 3"
-            },             
+            },
             "icon_3": {
               "label": "Icon"
             },
@@ -2429,7 +2578,7 @@
           "options__2": {
             "label": "2"
           }
-        },        
+        },
         "image_ratio": {
           "label": "Image ratio",
           "options__1": {
@@ -2481,10 +2630,10 @@
         },
         "header_layout": {
           "content": "Layout"
-        },                            
+        },
         "header_button": {
           "content": "Button"
-        }, 
+        },
         "image_width": {
           "label": "Width",
           "options__1": {
@@ -2691,7 +2840,7 @@
         },
         "content_header": {
           "content": "Content"
-        },        
+        },
         "desktop_content_alignment": {
           "options__1": {
             "label": "Left"
@@ -2924,7 +3073,7 @@
           "settings": {
             "header_button1": {
             "content": "Button 1"
-            }, 
+            },
             "button_label_1": {
               "label": "Label",
               "info": "Leave blank to hide",
@@ -2938,7 +3087,7 @@
             },
             "header_button2": {
               "content": "Button 2"
-            },             
+            },
             "button_label_2": {
               "label": "Label",
               "info": "Leave label blank to hide"
@@ -3078,7 +3227,7 @@
               "default": "Tell your brand's story through images"
             },
             "header_button": {
-            "content": "Button"      
+            "content": "Button"
             },
             "button_label": {
               "label": "Label",
@@ -3092,7 +3241,7 @@
               "label": "Outline style"
             },
             "box_align": {
-              "label": "Content position",              
+              "label": "Content position",
               "options__1": {
                 "label": "Top left"
               },
@@ -3122,7 +3271,7 @@
               }
             },
             "header_layout": {
-            "content": "Layout"                 
+            "content": "Layout"
             },
             "show_text_box": {
               "label": "Container"
@@ -3143,11 +3292,11 @@
               "label": "Overlay opacity"
             },
             "header_text": {
-            "content": "Text"      
+            "content": "Text"
             },
             "header_colors": {
-            "content": "Colors"                 
-            },            
+            "content": "Colors"
+            },
             "text_alignment_mobile": {
               "label": "Mobile content alignment",
               "options__1": {
@@ -3209,7 +3358,7 @@
         },
         "section_color_scheme": {
         "label": "Section color scheme"
-        },        
+        },
         "open_first_collapsible_row": {
           "label": "Open first row"
         },

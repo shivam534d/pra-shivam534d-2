@@ -16,9 +16,187 @@
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "build_your_own_box_RejxNx": {
+      "type": "build-your-own-box",
+      "blocks": {
+        "size_choice_YxQNAV": {
+          "type": "size_choice",
+          "settings": {
+            "image": "shopify://shop_images/USEDHOH.July2021.2_2x_9c61b94b-785c-4d40-bdd2-f521ea8a70be.png",
+            "title": "For Myself",
+            "size": "1 lb",
+            "subtitle": "Delivered right to your door!"
+          }
+        },
+        "size_choice_44NHpK": {
+          "type": "size_choice",
+          "settings": {
+            "image": "shopify://shop_images/Office_Coffee_2x_d66ffebd-926b-4950-8176-8b403a254d1b.png",
+            "title": "For the Office",
+            "size": "5 lb",
+            "subtitle": "No more coffee runs at Work!"
+          }
+        },
+        "step_2_9WEi8c": {
+          "type": "step_2",
+          "settings": {
+            "tab_title": "Selection Preference",
+            "choice_1_title": "How many bags of coffee would you like?",
+            "choice_2_title": "Choose your grind type.",
+            "choice_3_title": "How often would you like to receive your coffee?",
+            "meta_info": "All subscription orders will be roasted and shipped on the 1st of every month."
+          }
+        },
+        "bag_size_FaDQtY": {
+          "type": "bag_size",
+          "settings": {
+            "image": "shopify://shop_images/bag-4.svg",
+            "title": "4 Bags",
+            "number_of_bags": 4
+          }
+        },
+        "bag_size_p9x34A": {
+          "type": "bag_size",
+          "settings": {
+            "image": "shopify://shop_images/bag-8.svg",
+            "title": "8 Bags",
+            "number_of_bags": 8
+          }
+        },
+        "bag_size_rn89JX": {
+          "type": "bag_size",
+          "settings": {
+            "image": "shopify://shop_images/bag-12.svg",
+            "title": "12 Bags",
+            "number_of_bags": 12
+          }
+        },
+        "grind_type_3NPprx": {
+          "type": "grind_type",
+          "settings": {
+            "image": "shopify://shop_images/brans.svg",
+            "title": "Beans",
+            "subtitle": "Whole Beans",
+            "type_of_product": "Beans"
+          }
+        },
+        "grind_type_EyFnDj": {
+          "type": "grind_type",
+          "settings": {
+            "image": "shopify://shop_images/press.svg",
+            "title": "Press",
+            "subtitle": "Coarse",
+            "type_of_product": "Press"
+          }
+        },
+        "grind_type_X3nx6U": {
+          "type": "grind_type",
+          "settings": {
+            "image": "shopify://shop_images/drip.svg",
+            "title": "Drip",
+            "subtitle": "Medium",
+            "type_of_product": "Drip"
+          }
+        },
+        "grind_type_AbxVtr": {
+          "type": "grind_type",
+          "settings": {
+            "image": "shopify://shop_images/cone.svg",
+            "title": "Cone",
+            "subtitle": "Medium-Fine",
+            "type_of_product": "Cone"
+          }
+        },
+        "grind_type_DbGXFD": {
+          "type": "grind_type",
+          "settings": {
+            "image": "shopify://shop_images/espresso.svg",
+            "title": "Espresso",
+            "subtitle": "Fine",
+            "type_of_product": "Espresso"
+          }
+        },
+        "grind_type_Dw3qmc": {
+          "type": "grind_type",
+          "settings": {
+            "image": "shopify://shop_images/extra-fine.svg",
+            "title": "Extra Fine",
+            "subtitle": "The Finest",
+            "type_of_product": "Extra Fine"
+          }
+        },
+        "frequency_block_wGewkj": {
+          "type": "frequency_block",
+          "settings": {
+            "display_text": "Once a Month",
+            "value": "Once a Month"
+          }
+        },
+        "frequency_block_nMrjBT": {
+          "type": "frequency_block",
+          "settings": {
+            "display_text": "Every Other Month",
+            "value": "Alternate Months"
+          }
+        },
+        "frequency_block_bkXBpp": {
+          "type": "frequency_block",
+          "settings": {
+            "display_text": "Every 3 Month",
+            "value": "Quaterly"
+          }
+        },
+        "step_3_UKdDMa": {
+          "type": "step_3",
+          "settings": {
+            "tab_title": "Roast Preference",
+            "text_1": "You have selected",
+            "text_2": "Based on Your Selection"
+          }
+        },
+        "step_4_WFX9WK": {
+          "type": "step_4",
+          "settings": {
+            "tab_title": "Summary",
+            "text_1": "Order Summary"
+          }
+        }
+      },
+      "block_order": [
+        "size_choice_YxQNAV",
+        "size_choice_44NHpK",
+        "step_2_9WEi8c",
+        "bag_size_FaDQtY",
+        "bag_size_p9x34A",
+        "bag_size_rn89JX",
+        "grind_type_3NPprx",
+        "grind_type_EyFnDj",
+        "grind_type_X3nx6U",
+        "grind_type_AbxVtr",
+        "grind_type_DbGXFD",
+        "grind_type_Dw3qmc",
+        "frequency_block_wGewkj",
+        "frequency_block_nMrjBT",
+        "frequency_block_bkXBpp",
+        "step_3_UKdDMa",
+        "step_4_WFX9WK"
+      ],
+      "settings": {
+        "back_text": "Back",
+        "next_text": "Next",
+        "title": "Who is this for?",
+        "white_color": "#ffffff",
+        "black_color": "#1a1818",
+        "gray_color": "#5c5c54",
+        "gray_color_2": "#f5f5f5",
+        "primary_color": "#9d1c30",
+        "text_on_primary_color": "#f3e7b5"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "build_your_own_box_RejxNx"
   ]
 }
