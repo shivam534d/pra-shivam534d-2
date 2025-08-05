@@ -512,6 +512,9 @@
             "text_1": {
               "label": "Title"
             },
+            "text_2": {
+              "label": "Subtitle Text"
+            }
           }
         }
       }

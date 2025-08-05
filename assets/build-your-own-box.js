@@ -45,6 +45,17 @@ function handleSizeChoice(event) {
     frequency: null,
   };
   renderStep2();
+
+  // Clone the clicked element and append to selection preview
+  const selectionPreview = document.querySelector('[data-id="selection_preview"]');
+  const clonedElement = clickedElement.cloneNode(true);
+  clonedElement.classList.remove('active');
+
+  // Clear any existing content
+  selectionPreview.innerHTML = '';
+
+  // Add the cloned element
+  selectionPreview.appendChild(clonedElement);
 }
 
 sizeChoiceNodes.forEach((element) => {
@@ -211,6 +222,61 @@ function handleNextStep(event) {
     const step3Tab = document.querySelector('[data-tab="step_3"]');
     step3Tab.classList.add('active');
   }
+
+  if (currentStep === 'step_3') {
+    // Update active step content
+    const step3Content = document.querySelector('[data-step="3"]');
+    step3Content.classList.remove('active');
+
+    const step4Content = document.querySelector('[data-step="4"]');
+    step4Content.classList.add('active');
+
+    // Update active tab
+    activeTab.classList.remove('active');
+    const step4Tab = document.querySelector('[data-tab="step_4"]');
+    step4Tab.classList.add('active');
+
+    renderStep4();
+  }
+}
+
+function renderStep4() {
+  const step4Content = document.querySelector('[data-step="4"]');
+  step4Content.classList.add('active');
+
+  const step3Content = document.querySelector('[data-step="3"]');
+  step3Content.classList.remove('active');
+
+  const orderSummary = document.querySelector('[data-id="order_summary"]');
+  orderSummary.innerHTML = `
+    <div class="flex col" data-id="order_summary_container">
+      <div class="summary_item">
+        <p class="summary_title">Bag Selection</p>
+        <p class="summary_content">${byob_data.bags} Bags</p>
+      </div>
+      <div class="summary_item">
+        <p class="summary_title">Selected Products</p>
+        ${byob_data.products.map(product => `
+          <p class="summary_content">${product.title}</p>
+        `).join('')}
+      </div>
+      <div class="summary_item">
+        <p class="summary_title">Grind Type</p>
+        <p class="summary_content">${byob_data.grind_type}</p>
+      </div>
+      <div class="summary_item">
+        <p class="summary_title">Frequency</p>
+        <p class="summary_content">${byob_data.frequency}</p>
+      </div>
+    </div>
+
+    <div class="subtotal_container">
+      <p class="subtotal_title">Subtotal</p>
+      <p class="subtotal_content" data-id="subtotal">₹ ${(byob_data.products.reduce((total, product) => total + (parseFloat(product.price) || 0), 0).toFixed(2) / 100).toLocaleString('en-IN')}</p>
+    </div>
+
+    <button class="btn-atb" onclick="addToCart()">Add to Bag</button>
+  `;
 }
 
 /*
@@ -314,9 +380,13 @@ function selectProduct(variant_id) {
       return;
     }
 
+    const product = products_data.find(product => product.variants.some(variant => variant.id === variant_id));
+
     // Add to selection
     byob_data.products.push({
       id: variant_id,
+      title: product.title,
+      price: product.price,
       quantity: 1,
       properties: {
         "Grind Type": byob_data.grind_type,
@@ -346,7 +416,11 @@ async function addToCart() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        items: byob_data.products
+        items: [...byob_data.products.map(product => ({
+          id: product.id,
+          quantity: product.quantity,
+          properties: product.properties
+        }))]
       })
     });
 

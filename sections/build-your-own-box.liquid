@@ -124,9 +124,31 @@
     <div class="step-4-content" data-step="4">
       <div class="section">
         <h2>{{ step_4_block.settings.text_1 }}</h2>
+        <p class="step-4-text-2">{{ step_4_block.settings.text_2 }}</p>
+      </div>
+
+      <div class="step-4-content-container">
+        <div class="w-50" data-id="selection_preview">
+
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'size_choice' %}
+                <div class="size_choice_item" data-size-choice="{{ block.settings.size }}">
+                  {{ block.settings.image | image_url: width: 500 | image_tag: class: 'size_choice_image' }}
+                  <h2 class="size_choice_item_title">{{ block.settings.title }}</h2>
+                  <div class="flex">
+                    <p class="size_choice_item_size">{{ block.settings.size }}</p> •
+                    <p class="size_choice_item_subtitle">{{ block.settings.subtitle }}</p>
+                  </div>
+                </div>
+            {% endcase %}
+            {% break %}
+          {% endfor %}
+
+        </div>
+        <div class="w-50" data-id="order_summary"></div>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -398,6 +420,12 @@
           "label": "t:sections.build_your_own_box.blocks.step_4.settings.text_1.label",
           "default": "Order Summary"
         },
+        {
+          "type": "text",
+          "id": "text_2",
+          "label": "t:sections.build_your_own_box.blocks.step_4.settings.text_2.label",
+          "default": "You’ll be able to change or cancel this subscription at anytime."
+        }
       ]
     }
   ],
