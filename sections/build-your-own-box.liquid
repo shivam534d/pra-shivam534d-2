@@ -64,6 +64,7 @@
       <div class="section">
         <h2>{{ step_2_block.settings.choice_1_title }}</h2>
         <div class="bag_sizes_card_container">
+          {% assign available_bag_size_string = "" %}
           {% for block in section.blocks %}
             {% case block.type %}
               {% when 'bag_size' %}
@@ -71,6 +72,7 @@
                   {{ block.settings.image | image_url: width: 500 | image_tag: class: 'bag_size_image' }}
                   <h3 class="bag_size_title">{{ block.settings.title }}</h3>
                   <p class="bag_size_subtitle">{{ block.settings.number_of_bags }} bags</p>
+                  {% assign available_bag_size_string = available_bag_size_string | append: block.settings.number_of_bags | append: " / " %}
                 </div>
             {% endcase %}
           {% endfor %}
@@ -111,7 +113,14 @@
     </div>
 
     <div class="step-3-content" data-step="3">
+      <div class="section">
+        <h2 class="step-3-text-1" data-id="selected-product-count">{{ step_3_block.settings.text_1 }}</h2>
+        <h2 class="step-3-text-2">({{ step_3_block.settings.text_2 }} - <span>{{ available_bag_size_string | remove_last: " / " }} Bags</span>)</h2>
+      </div>
+
+      <div class="product_grid" id="product_grid"></div>
     </div>
+
   </div>
 </div>
 
@@ -189,6 +198,11 @@
       "id": "text_on_primary_color",
       "label": "t:sections.build_your_own_box.settings.text_on_primary_color.label",
       "default": "#ffffff"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:sections.build_your_own_box.settings.collection.label"
     }
   ],
   "blocks": [

@@ -6,6 +6,8 @@ let byob_data = {
   frequency: null,
 };
 
+let filtered_products = [];
+
 function renderStep2() {
   console.log(`🚀 || build-your-own-box.js:11 || renderStep2 || byob_data:`, byob_data);
   const step1Content = document.querySelector('.step-1-content');
@@ -175,13 +177,50 @@ function handleNextStep(event) {
     return;
   }
 
+  // If current step is 2, filter products based on grind type
+  if (currentStep === 'step_2') {
+    // Filter products based on selected grind type and size
+    const filteredProducts = products_data.filter(product => {
+      // Check grind type match
+      const productType = product.type ? product.type.toLowerCase() : '';
+      const selectedGrindType = byob_data.grind_type.toLowerCase();
+      const grindTypeMatches = productType === selectedGrindType || productType.includes(selectedGrindType) || selectedGrindType.includes(productType) || !productType;
+      // Check if any variant matches selected size and has inventory
+      const hasMatchingVariant = product.variants.some(variant => {
+        const variantSize = variant.title.toLowerCase();
+        const selectedSize = byob_data.size.toLowerCase();
+        const sizeMatches = variantSize === selectedSize;
+        const hasInventory = variant.available && (!variant.inventory_management || variant.inventory_management === 'shopify');
+        return sizeMatches && hasInventory;
+      });
 
+      return grindTypeMatches && hasMatchingVariant;
+    });
+
+    filtered_products = filteredProducts;
+    renderProducts(filtered_products);
+
+    // Update active step content
+    const step2Content = document.querySelector('[data-step="2"]');
+    step2Content.classList.remove('active');
+
+    const step3Content = document.querySelector('[data-step="3"]');
+    step3Content.classList.add('active');
+
+    // Update active tab
+    activeTab.classList.remove('active');
+    const step3Tab = document.querySelector('[data-tab="step_3"]');
+    step3Tab.classList.add('active');
+  }
 }
 
-function validateBYOBData(step) {
-  console.log(`🚀 || build-your-own-box.js || validateBYOBData || step:`, step);
-  console.log(`🚀 || build-your-own-box.js || validateBYOBData || byob_data:`, byob_data);
+/*
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ Validate BYOB Data                                                      │
+  └─────────────────────────────────────────────────────────────────────────┘
+*/
 
+function validateBYOBData(step) {
   switch(step) {
     case 'step_2':
       if (!byob_data.bags || !byob_data.grind_type || !byob_data.frequency) {
@@ -189,9 +228,8 @@ function validateBYOBData(step) {
         return false;
       }
       return true;
-
     case 'step_3':
-      if (!byob_data.products || byob_data.products.length === 0) {
+      if (!byob_data.products || byob_data.products.length === 0 || byob_data.products.length < byob_data.bags) {
         console.log('Please select products in Step 3');
         return false;
       }
@@ -199,5 +237,132 @@ function validateBYOBData(step) {
     default:
       console.log('Unknown step');
       return false;
+  }
+}
+
+/*
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ Render Products                                                         │
+  └─────────────────────────────────────────────────────────────────────────┘
+*/
+function renderProducts(filtered_products) {
+  console.log(`🚀 || build-your-own-box.js || renderProducts || filtered_products:`, filtered_products);
+
+  const step3Content = document.querySelector('.step-3-content');
+  step3Content.classList.add('active');
+
+  const step2Content = document.querySelector('.step-2-content');
+  step2Content.classList.remove('active');
+
+  // Update selected product count text
+  const selectedProductCount = document.querySelector('[data-id="selected-product-count"]');
+  if (selectedProductCount) {
+    selectedProductCount.innerHTML = `You have selected <span>(${byob_data.products?.length || 0}/${byob_data.bags})</span>`;
+  }
+
+  // Render products
+  const productGrid = document.querySelector('#product_grid');
+  if (!productGrid) {
+    console.error('Product grid element not found');
+    return;
+  }
+
+  productGrid.innerHTML = '';
+
+  if (!filtered_products || filtered_products.length === 0) {
+    productGrid.innerHTML = '<div class="no-products">No products found for the selected criteria.</div>';
+    return;
+  }
+
+  filtered_products.forEach((product) => {
+    let variant_id = product.variants.find(variant => variant.option1.toLowerCase() === byob_data.size.toLowerCase())?.id;
+    console.log(`🚀 || build-your-own-box.js:314 || renderProducts || variant_id:`, variant_id);
+    const productCard = `
+      <div class="product-card" data-product-id="${variant_id}">
+        <div class="product-image">
+          <img src="${product.featured_image}" alt="${product.title}" />
+          <span class="badge">${product.tags[0]}</span>
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">${product.title}</h3>
+          <div class="product-subtitle">${product.description}</div>
+          <button class="select-btn" onclick="selectProduct('${variant_id}')">
+            SELECT
+          </button>
+        </div>
+      </div>
+    `;
+    productGrid.innerHTML += productCard;
+  });
+}
+
+// Function to handle product selection
+function selectProduct(variant_id) {
+  console.log(`🚀 || build-your-own-box.js || selectProduct || variant_id:`, variant_id);
+  const productCard = document.querySelector(`[data-product-id="${variant_id}"]`);
+  const selectBtn = productCard.querySelector('.select-btn');
+
+  // Check if product is already selected
+  const isSelected = byob_data.products.some(product => product.variant_id === variant_id);
+
+  if (isSelected) {
+    // Remove from selection
+    byob_data.products = byob_data.products.filter(product => product.variant_id !== variant_id);
+    selectBtn.textContent = 'SELECT';
+    selectBtn.classList.remove('selected');
+    productCard.classList.remove('selected');
+  } else {
+    // Check if we can add more products
+    if (byob_data.products.length >= byob_data.bags) {
+      console.log(`🚀 || build-your-own-box.js || selectProduct || You can only select ${byob_data.bags} products. Please deselect one first.`);
+      return;
+    }
+
+    // Add to selection
+    byob_data.products.push({
+      id: variant_id,
+      quantity: 1,
+      properties: {
+        "Grind Type": byob_data.grind_type,
+        "Frequency": byob_data.frequency
+      }
+    });
+    selectBtn.textContent = 'SELECTED';
+    selectBtn.classList.add('selected');
+    productCard.classList.add('selected');
+  }
+
+  // Update selected product count
+  const selectedProductCount = document.querySelector('[data-id="selected-product-count"]');
+  selectedProductCount.innerHTML = `You have selected <span>(${byob_data.products.length}/${byob_data.bags})</span>`;
+
+  console.log(`🚀 || build-your-own-box.js || selectProduct || byob_data:`, byob_data);
+}
+
+// Function to add products to cart
+async function addToCart() {
+  try {
+    const response = await fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        items: byob_data.products
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const result = await response.json();
+    console.log('Products added to cart:', result);
+
+    // Redirect to cart page after successful addition
+    window.location.href = '/cart';
+
+  } catch (error) {
+    console.error('Error adding products to cart:', error);
   }
 }

@@ -399,6 +399,9 @@
         },
         "text_on_primary_color": {
           "label": "Text on Primary Color"
+        },
+        "collection": {
+          "label": "Collection"
         }
       },
       "blocks": {

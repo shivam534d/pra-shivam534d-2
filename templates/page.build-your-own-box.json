@@ -191,7 +191,8 @@
         "gray_color": "#5c5c54",
         "gray_color_2": "#f5f5f5",
         "primary_color": "#9d1c30",
-        "text_on_primary_color": "#f3e7b5"
+        "text_on_primary_color": "#f3e7b5",
+        "collection": "coffee-data"
       }
     }
   },
