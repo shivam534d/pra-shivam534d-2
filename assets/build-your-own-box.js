@@ -77,7 +77,6 @@ bagSizeNodes.forEach((element) => {
 function handleBagSize(event) {
   const clickedElement = event.currentTarget;
   const bagSize = parseInt(clickedElement.getAttribute('data-bag-size'));
-  console.log(`🚀 || build-your-own-box.js:70 || handleBagSize || bagSize:`, bagSize);
 
   // Remove active class from all nodes
   bagSizeNodes.forEach((element) => {
@@ -94,7 +93,6 @@ function handleBagSize(event) {
     grind_type: null,
     frequency: null,
   };
-  console.log(`🚀 || build-your-own-box.js:87 || handleBagSize || byob_data:`, byob_data);
 }
 
 /*
@@ -112,7 +110,6 @@ grindTypeNodes.forEach((element) => {
 function handleGrindType(event) {
   const clickedElement = event.currentTarget;
   const grindType = clickedElement.getAttribute('data-grind-type');
-  console.log(`🚀 || build-your-own-box.js || handleGrindType || grindType:`, grindType);
 
   // Remove active class from all nodes
   grindTypeNodes.forEach((element) => {
@@ -128,7 +125,6 @@ function handleGrindType(event) {
     products: [],
     frequency: null,
   };
-  console.log(`🚀 || build-your-own-box.js || handleGrindType || byob_data:`, byob_data);
 }
 
 /*
@@ -145,7 +141,6 @@ frequencyNodes.forEach((element) => {
 function handleFrequency(event) {
   const clickedElement = event.currentTarget;
   const frequency = clickedElement.getAttribute('data-frequency');
-  console.log(`🚀 || build-your-own-box.js || handleFrequency || frequency:`, frequency);
 
   // Remove active class from all nodes
   frequencyNodes.forEach((element) => {
@@ -160,7 +155,6 @@ function handleFrequency(event) {
     frequency: frequency,
     products: [],
   };
-  console.log(`🚀 || build-your-own-box.js || handleFrequency || byob_data:`, byob_data);
 }
 
 
@@ -178,11 +172,9 @@ function handleNextStep(event) {
   // Get active step
   const activeTab = document.querySelector('.navigation_row_tab.active');
   const currentStep = activeTab.getAttribute('data-tab');
-  console.log(`🚀 || build-your-own-box.js || handleNextStep || currentStep:`, currentStep);
 
   // Validate BYOB data based on current step
   const isValid = validateBYOBData(currentStep);
-  console.log(`🚀 || build-your-own-box.js:173 || handleNextStep || isValid:`, isValid);
   if (!isValid) {
     return;
   }
@@ -192,18 +184,17 @@ function handleNextStep(event) {
     // Filter products based on selected grind type and size
     const filteredProducts = products_data.filter(product => {
       // Check grind type match
-      const productType = product.type ? product.type.toLowerCase() : '';
+      const productType = product.productType ? product.productType.toLowerCase() : '';
       const selectedGrindType = byob_data.grind_type.toLowerCase();
       const grindTypeMatches = productType === selectedGrindType || productType.includes(selectedGrindType) || selectedGrindType.includes(productType) || !productType;
       // Check if any variant matches selected size and has inventory
-      const hasMatchingVariant = product.variants.some(variant => {
+      const hasMatchingVariant = product.variants.nodes.some(variant => {
         const variantSize = variant.title.toLowerCase();
         const selectedSize = byob_data.size.toLowerCase();
         const sizeMatches = variantSize === selectedSize;
-        const hasInventory = variant.available && (!variant.inventory_management || variant.inventory_management === 'shopify');
+        const hasInventory = variant.availableForSale && variant.quantityAvailable > 0;
         return sizeMatches && hasInventory;
       });
-
       return grindTypeMatches && hasMatchingVariant;
     });
 
@@ -272,7 +263,7 @@ function renderStep4() {
 
     <div class="subtotal_container">
       <p class="subtotal_title">Subtotal</p>
-      <p class="subtotal_content" data-id="subtotal">₹ ${(byob_data.products.reduce((total, product) => total + (parseFloat(product.price) || 0), 0).toFixed(2) / 100).toLocaleString('en-IN')}</p>
+      <p class="subtotal_content" data-id="subtotal">₹ ${(byob_data.products.reduce((total, product) => total + (parseFloat(product.price) || 0), 0).toFixed(2)).toLocaleString('en-IN')}</p>
     </div>
 
     <button class="btn-atb" onclick="addToCart()">Add to Bag</button>
@@ -338,11 +329,12 @@ function renderProducts(filtered_products) {
   }
 
   filtered_products.forEach((product) => {
-    let variant_id = product.variants.find(variant => variant.option1.toLowerCase() === byob_data.size.toLowerCase())?.id;
+    let variant = product.variants.nodes.find(variant => variant.title.toLowerCase() === byob_data.size.toLowerCase());
+    let variant_id = variant?.id.split('ProductVariant/').pop();
     const productCard = `
       <div class="product-card" data-product-id="${variant_id}">
         <div class="product-image">
-          <img src="${product.featured_image}" alt="${product.title}" />
+          <img src="${product.images.nodes[1].url}&width=320" alt="${product.title}" />
           <span class="badge">${product.tags[0]}</span>
         </div>
         <div class="product-details">
@@ -380,13 +372,13 @@ function selectProduct(variant_id) {
       return;
     }
 
-    const product = products_data.find(product => product.variants.some(variant => variant.id === variant_id));
+    const product = products_data.find(product => product.variants.nodes.some(variant => variant.id === `gid://shopify/ProductVariant/${variant_id}`));
 
     // Add to selection
     byob_data.products.push({
       id: variant_id,
       title: product.title,
-      price: product.price,
+      price: product.variants.nodes.find(variant => variant.id === `gid://shopify/ProductVariant/${variant_id}`).price.amount,
       quantity: 1,
       properties: {
         "Grind Type": byob_data.grind_type,
@@ -437,3 +429,17 @@ async function addToCart() {
     console.error('Error adding products to cart:', error);
   }
 }
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const requestOptions = {
+    method: "GET",
+    redirect: "follow"
+  };
+  try {
+    const response = await fetch(`https://pra-shivam534d2-2-backend-vko9.vercel.app/api/collection/${collection_id}`, requestOptions);
+    const result = await response.json();
+    products_data = result.products;
+  } catch (error) {
+    console.error(error);
+  };
+});
