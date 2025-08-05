@@ -9,7 +9,6 @@ let byob_data = {
 let filtered_products = [];
 
 function renderStep2() {
-  console.log(`🚀 || build-your-own-box.js:11 || renderStep2 || byob_data:`, byob_data);
   const step1Content = document.querySelector('.step-1-content');
   step1Content.classList.remove('active');
 
@@ -246,8 +245,6 @@ function validateBYOBData(step) {
   └─────────────────────────────────────────────────────────────────────────┘
 */
 function renderProducts(filtered_products) {
-  console.log(`🚀 || build-your-own-box.js || renderProducts || filtered_products:`, filtered_products);
-
   const step3Content = document.querySelector('.step-3-content');
   step3Content.classList.add('active');
 
@@ -263,7 +260,7 @@ function renderProducts(filtered_products) {
   // Render products
   const productGrid = document.querySelector('#product_grid');
   if (!productGrid) {
-    console.error('Product grid element not found');
+    console.error(`🚀 || build-your-own-box.js:262 || renderProducts || productGrid:`, productGrid);
     return;
   }
 
@@ -276,7 +273,6 @@ function renderProducts(filtered_products) {
 
   filtered_products.forEach((product) => {
     let variant_id = product.variants.find(variant => variant.option1.toLowerCase() === byob_data.size.toLowerCase())?.id;
-    console.log(`🚀 || build-your-own-box.js:314 || renderProducts || variant_id:`, variant_id);
     const productCard = `
       <div class="product-card" data-product-id="${variant_id}">
         <div class="product-image">
@@ -298,23 +294,23 @@ function renderProducts(filtered_products) {
 
 // Function to handle product selection
 function selectProduct(variant_id) {
-  console.log(`🚀 || build-your-own-box.js || selectProduct || variant_id:`, variant_id);
+  variant_id = parseInt(variant_id);
   const productCard = document.querySelector(`[data-product-id="${variant_id}"]`);
   const selectBtn = productCard.querySelector('.select-btn');
 
   // Check if product is already selected
-  const isSelected = byob_data.products.some(product => product.variant_id === variant_id);
+  const isSelected = byob_data.products.some(product => product.id === variant_id);
 
   if (isSelected) {
     // Remove from selection
-    byob_data.products = byob_data.products.filter(product => product.variant_id !== variant_id);
+    byob_data.products = byob_data.products.filter(product => product.id !== variant_id);
     selectBtn.textContent = 'SELECT';
     selectBtn.classList.remove('selected');
     productCard.classList.remove('selected');
   } else {
     // Check if we can add more products
     if (byob_data.products.length >= byob_data.bags) {
-      console.log(`🚀 || build-your-own-box.js || selectProduct || You can only select ${byob_data.bags} products. Please deselect one first.`);
+      console.error(`🚀 || build-your-own-box.js || selectProduct || You can only select ${byob_data.bags} products. Please deselect one first.`);
       return;
     }
 
@@ -335,11 +331,13 @@ function selectProduct(variant_id) {
   // Update selected product count
   const selectedProductCount = document.querySelector('[data-id="selected-product-count"]');
   selectedProductCount.innerHTML = `You have selected <span>(${byob_data.products.length}/${byob_data.bags})</span>`;
-
-  console.log(`🚀 || build-your-own-box.js || selectProduct || byob_data:`, byob_data);
 }
 
-// Function to add products to cart
+/*
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ Function to add products to cart                                        │
+  └─────────────────────────────────────────────────────────────────────────┘
+*/
 async function addToCart() {
   try {
     const response = await fetch('/cart/add.js', {
@@ -357,7 +355,6 @@ async function addToCart() {
     }
 
     const result = await response.json();
-    console.log('Products added to cart:', result);
 
     // Redirect to cart page after successful addition
     window.location.href = '/cart';
